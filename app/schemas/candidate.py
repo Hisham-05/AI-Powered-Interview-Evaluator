@@ -6,5 +6,6 @@ class CreateCandidate(BaseModel):
     password: str
 
 class CandidateResponse(BaseModel):
+    id: int
     name: str
     email: str
