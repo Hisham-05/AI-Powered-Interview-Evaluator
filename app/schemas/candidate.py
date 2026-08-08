@@ -9,3 +9,7 @@ class CandidateResponse(BaseModel):
     id: int
     name: str
     email: str
+
+class CandidateUpdate(BaseModel):
+    name: str
+    email: str
