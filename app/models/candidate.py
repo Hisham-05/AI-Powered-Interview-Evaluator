@@ -1,4 +1,6 @@
 from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
+
 from app.database import Base
 
 class Candidate(Base):
@@ -11,3 +13,5 @@ class Candidate(Base):
     email = Column(String)
 
     password = Column(String)
+
+    interviews = relationship("Interview", back_populates = "candidates")
