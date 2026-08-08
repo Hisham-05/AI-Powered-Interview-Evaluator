@@ -69,3 +69,22 @@ def update_candidate(id:int, candidate_update: CandidateUpdate):
 
     finally:
         session.close()
+
+@router.delete("/candidates/{id}")
+def delete_candidate(id: int):
+    session = sessionLocal()
+    try:
+        statement = select(Candidate).where(Candidate.id == id)
+        result = session.execute(statement)
+        candidate = result.scalar_one_or_none()
+
+        if candidate is None:
+            raise HTTPException(status_code = 404, detail = "Candidate not found")
+
+        session.delete(candidate)
+        session.commit()
+
+        return "Deleted successfully!"
+
+    finally:
+        session.close()

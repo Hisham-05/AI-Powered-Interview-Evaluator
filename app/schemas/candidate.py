@@ -13,3 +13,4 @@ class CandidateResponse(BaseModel):
 class CandidateUpdate(BaseModel):
     name: str
     email: str
+
