@@ -28,3 +28,27 @@ def create_interview(interview: CreateInterview):
 
     finally:
         session.close()
+
+@router.get("/interviews", response_model = list[InterviewResponse])
+def get_interviews():
+    session = sessionLocal()
+    statement = select(Interview)
+    result = session.execute(statement)
+    interviews = result.scalars().all()
+    session.close()
+    return interviews
+
+@router.get("/interviews/{id}", response_model = InterviewResponse)
+def get_interview(id : int):
+    session = sessionLocal()
+    try:
+        statement = select(Interview).where(Interview.id == id)
+        result = session.execute(statement)
+        interview = result.scalar_one_or_none()
+
+        if interview is None:
+            raise HTTPException(status_code = 404, detail = "Interview not found")
+
+        return interview
+    finally:
+        session.close()
