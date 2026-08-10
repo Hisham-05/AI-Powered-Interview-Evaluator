@@ -10,3 +10,8 @@ class InterviewResponse(BaseModel):
     candidate_id : int
     company : str
     role : str
+
+class UpdateInterview(BaseModel):
+    candidate_id : int
+    company : str
+    role : str

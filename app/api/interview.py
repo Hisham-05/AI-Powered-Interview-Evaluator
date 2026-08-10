@@ -4,7 +4,7 @@ from sqlalchemy import select
 from app.database import sessionLocal
 from app.models.interview import Interview
 from app.models.candidate import Candidate
-from app.schemas.interview import CreateInterview, InterviewResponse
+from app.schemas.interview import CreateInterview, InterviewResponse, UpdateInterview
 
 router = APIRouter()
 
@@ -50,5 +50,53 @@ def get_interview(id : int):
             raise HTTPException(status_code = 404, detail = "Interview not found")
 
         return interview
+    finally:
+        session.close()
+
+@router.put("/interviews/{id}", response_model=InterviewResponse)
+def update_interview(id : int, updated_content : UpdateInterview):
+    session = sessionLocal()
+    try:
+        statement = select(Interview).where(Interview.id == id)
+        result = session.execute(statement)
+        interview = result.scalar_one_or_none()
+
+        if interview is None:
+            raise HTTPException(status_code = 404, detail = "Interview not found")
+
+        statement = select(Candidate).where(Candidate.id == updated_content.candidate_id)
+        result = session.execute(statement)
+        candidate = result.scalar_one_or_none()
+
+        if candidate is None:
+            raise HTTPException(status_code = 404, detail = "Candidate not found")
+
+        interview.candidate_id = updated_content.candidate_id
+        interview.company = updated_content.company
+        interview.role = updated_content.role
+
+        session.commit()
+        session.refresh(interview)
+
+        return interview
+
+    finally:
+        session.close()
+
+@router.delete("/interviews/{id}")
+def delete_interview(id:int):
+    session = sessionLocal()
+    try:
+        statement = select(Interview).where(Interview.id == id)
+        result = session.execute(statement)
+        interview = result.scalar_one_or_none()
+
+        if interview is None:
+            raise HTTPException(status_code=404, detail="Interview not found")
+
+        session.delete(interview)
+        session.commit()
+        return "Interview deleted successfully"
+
     finally:
         session.close()
