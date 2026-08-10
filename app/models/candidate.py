@@ -14,4 +14,4 @@ class Candidate(Base):
 
     password = Column(String)
 
-    interviews = relationship("Interview", back_populates = "candidates")
+    interview_att = relationship("Interview", back_populates = "candidate_att")

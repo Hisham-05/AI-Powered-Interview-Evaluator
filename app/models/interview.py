@@ -14,6 +14,7 @@ class Interview(Base):
 
     role = Column(String)
 
-    candidates = relationship("Candidate", back_populates = "interviews")
+    candidate_att = relationship("Candidate", back_populates = "interview_att")
 
+    question_att = relationship("Question", back_populates="interview_att")
 
