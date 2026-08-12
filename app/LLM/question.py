@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+from app.schemas.question import GeneratedQuestions, GeneratedQuestion
 
 load_dotenv()
 API_KEY = os.getenv("GOOGLE_API_KEY")
@@ -20,5 +21,6 @@ message = "Hello, gemini! This is my first message to you! Hi!"
 messages = [{"role":"system", "content":system_prompt}, {"role":"user", "content":user_prompt_prefix}]
 
 
-response = gemini.chat.completions.create(model="gemini-3.1-flash-lite", messages=messages)
+response = gemini.chat.completions.parse(model="gemini-3.1-flash-lite", messages=messages, response_format=GeneratedQuestions)
 print(response.choices[0].message.content)
+print(response)
