@@ -16,5 +16,5 @@ class Interview(Base):
 
     candidate_att = relationship("Candidate", back_populates = "interview_att")
 
-    question_att = relationship("Question", back_populates="interview_att")
+    question_interview = relationship("Question", back_populates="interview_question")
 

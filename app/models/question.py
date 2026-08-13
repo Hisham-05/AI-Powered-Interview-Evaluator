@@ -11,5 +11,6 @@ class Question(Base):
 
     interview_id = Column(Integer, ForeignKey("interviews.id"))
 
-    interview_att = relationship("Interview", back_populates="question_att")
+    interview_question = relationship("Interview", back_populates="question_interview")
 
+    response = relationship("Response", back_populates="question")
