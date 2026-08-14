@@ -13,3 +13,5 @@ class Response(Base):
     answer = Column(String)
 
     question = relationship("Question", back_populates="response")
+
+    evaluation = relationship("Evaluation", back_populates= "response")
