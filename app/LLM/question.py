@@ -24,5 +24,3 @@ def generate_questions(role, company):
     else:
         questions = [question.question for question in raw_generated_questions]
         return questions
-
-generate_questions("ML", "Microsoft")

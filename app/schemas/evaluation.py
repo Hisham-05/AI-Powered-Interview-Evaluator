@@ -22,3 +22,13 @@ class EvaluationResponse(BaseModel):
     filler_word_count: int
     feedback: str
     strengths: str
+
+class GeneratedEvaluation(BaseModel):
+    accuracy_score: int
+    relevance_score: int
+    technical_score: int
+    grammar_score: int
+    confidence_score: int
+    filler_word_count: int
+    feedback: str
+    strengths: str
